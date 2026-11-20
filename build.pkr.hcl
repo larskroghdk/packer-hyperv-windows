@@ -1,7 +1,8 @@
 build {
   name    = "windows-desktop"
-  sources = ["source.hyperv-iso.windows"]
-
+  sources = [
+    "source.hyperv-iso.windows"
+  ]
   provisioner "powershell" {
     script           = "scripts/guest/Prepare.ps1"
     environment_vars = ["FACTORY_RELEASE=${var.windows_release}", "FACTORY_EDITION=${var.edition}", "FACTORY_NETFX_SOURCE=${var.netfx_source}", "FACTORY_NETFX3=${var.enable_netfx3}", "FACTORY_EOL=${var.acknowledge_windows10_eol}"]
@@ -71,8 +72,6 @@ build {
     script           = "scripts/guest/Set-DesktopPolicy.ps1"
     environment_vars = ["FACTORY_RELEASE=${var.windows_release}", "FACTORY_REMOVE_CONSUMER=${var.remove_consumer_apps}"]
   }
-  # Each package gets its own supported Packer restart boundary. Operators must
-  # order checkpoint prerequisites before their target cumulative update.
   dynamic "provisioner" {
     for_each = var.approved_oob_packages
     labels   = ["file"]
@@ -109,8 +108,6 @@ build {
   provisioner "windows-restart" {
     restart_timeout = var.reboot_timeout
   }
-  # Updates may alter policies or services. Re-inspect through the same plugins
-  # before issuing a release; these passes perform no additional changes.
   provisioner "windows-optimize" {
     profile     = var.optimization_profile
     dry_run     = true
@@ -178,7 +175,6 @@ build {
     source      = "scripts/guest/Finalize.ps1"
     destination = "C:/ProgramData/ImageFactory/Finalize.ps1"
   }
-  # No guest provisioner follows finalizer staging. The builder owns shutdown.
   post-processor "manifest" {
     output     = "${local.reports}/packer-manifest.json"
     strip_path = false

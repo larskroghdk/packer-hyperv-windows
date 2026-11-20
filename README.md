@@ -1,4 +1,4 @@
-# 🖥️ packer-hyperv-windows-desktop
+# 🖥️ packer-hyperv-windows
 
 Packer HCL2 factory for generalized Windows 10/11 x64 Hyper-V VHDX templates. Reuses the architecture of `packer-hyperv-windows-server`: one shared ISO source, audited plugins, scoped HTTPS WinRM, controlled servicing, builder-owned Sysprep and detached read-only release verification. The original project is unchanged.
 

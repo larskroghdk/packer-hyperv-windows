@@ -1,6 +1,6 @@
 # 📋 Implementation and qualification report
 
-Date: 2026-11-20. Project: packer-hyperv-windows-desktop.
+Date: 2026-11-20. Project: packer-hyperv-windows.
 
 Adapted the inherited HCL2/Gen 2 Hyper-V image factory for Windows 10 22H2 and Windows 11 24H2/25H2/26H2 x64 with applicable Pro/Enterprise/Education editions. Added vTPM, desktop media/identity/lifecycle checks, client features, optional NetFx3, local OOBE account lifecycle, desktop policy, approved software bridge, narrow optional consumer removal and final Defender/firewall/AppX checks. Preserved bounded servicing, safe cleanup, plugin verification, builder Sysprep and read-only offline release gates. See [source analysis](source-analysis.md), [plugin audit](plugin-audit.md) and [operations](operations.md).
 

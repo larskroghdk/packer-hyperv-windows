@@ -1,4 +1,4 @@
-# Source analysis and reuse
+# 🧭 Source analysis and reuse
 
 Before implementation, inspected the source project's root HCL, release/settings files, examples, unattended XML, bootstrap, guest prepare/validate/finalize, SYSTEM MSU bridge, host/media/build scripts, manifest and detached-image verification, static/live tests, both workflows, documentation and all ten focused `.agents` skills. Source: `C:/Git/larskroghdk/packer-hyperv-windows-server`. Source commit: `81cf8e34da209fd0942c6cd53cebfdeda3746005`; Git status remained clean. No original source was edited.
 

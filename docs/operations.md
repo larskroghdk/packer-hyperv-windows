@@ -1,6 +1,6 @@
-# Operations
+# 🛠️ Operations
 
-## Prerequisites and media
+## 💿 Prerequisites and media
 
 Use a dedicated elevated Windows Hyper-V host with Gen 2, MicrosoftWindows Secure Boot, supported Windows 11 CPU, virtualization, virtual TPM commands and Windows ADK Deployment Tools (`oscdimg.exe` on PATH). Provide at least two vCPUs, 4096 MB fixed RAM and 65536 MB disk (81920 default), plus host and scratch capacity. The wrapper checks cmdlets, vmms, hypervisor, RAM, switch and media; CPU eligibility and nested virtualization require operator qualification. No existing switch or VM is modified. Windows 11 uses the actual Hyper-V `enable_tpm` option, without hardware bypasses.
 
@@ -8,7 +8,7 @@ Use official English x64 volume-license media and independently approved SHA256.
 
 Public Microsoft volume client setup keys select the requested edition without a product-key prompt. They confer no license entitlement. No activation/ESU enrollment or private MAK/KMS host key is included. Licensed consumers provide their own activation. Retail/OEM/evaluation channels require separate Windows SIM qualification and are not promised.
 
-## Configuration and execution
+## ▶️ Configuration and execution
 
 Copy [settings](../config/settings.example.json) or a release/edition [example](../examples/README.md) outside the repository and replace all placeholders. Required: iso_path, iso_checksum (`sha256:<64 hex>`), exact image_name, existing switch_name, host IP/CIDR winrm_allowed_address, image_version. Edition is Professional (Pro), Enterprise or Education; default Enterprise. Select Version as 10-22H2, 11-24H2, 11-25H2 or 11-26H2. The wrapper selects the release; settings cannot override it. [Variables](../variables.pkr.hcl) documents other inputs.
 
@@ -24,7 +24,7 @@ $env:PACKER_PLUGIN_PATH = "$pwd/.validation/plugins"
 
 The wrapper without -Build validates configuration only. Live builds require -Build or the live test switch. Existing VMs/output are never replaced. locale, keyboard_layout and time_zone configure region/input/timezone while UI remains en-US. Windows 10 requires acknowledge_windows10_eol=true; this accepts legacy support risk without establishing ESU entitlement or patch completeness. Win11 24H2 Pro is expired and rejected for live use. The Windows 11 hardening plugin independently enforces lifecycle. Review these dates when support policies change.
 
-## Features, software and desktop behavior
+## 🧩 Features, software and desktop behavior
 
 The shared order is features, approved software, restart, optimization, compatible hardening, desktop policy, approved offline updates, online updates/restarts, verification, cleanup and final evidence. NetFx3 is opt-in via enable_netfx3=true and same-media source/limit_access. PowerShell 2 is disabled when available; PowerShell 5.1/.NET 4 remain.
 
@@ -36,7 +36,7 @@ Desktop machine policies govern new users: required diagnostic data, consumer su
 
 Windows 11 uses hardening auto/non_domain_joined/compatibility with explicit deferrals. Windows 10 has no plugin baseline and receives limited local policy only. Full Microsoft baseline compliance is not claimed. Defender realtime protection, all firewall profiles, Secure Boot and TPM readiness are validated. Optimization defaults recommended; other profiles need desktop qualification.
 
-## Updates and release
+## 📦 Updates and release
 
 The pinned rgl updater installs applicable nonhidden software updates excluding Preview titles. It does not change WSUS/source or automatically enroll Microsoft Update. Retry limits bound failures; default update_timeout is six hours. The extra restart drains servicing. Final applicability scan uses the same filter: no applicable updates does not establish Windows 10 ESU entitlement or source coverage.
 
@@ -50,7 +50,7 @@ Builder shutdown waits for generalize/oobe/shutdown; no fallback shutdown disgui
 
 Deploy a COPY of the canonical disk with a fresh Gen 2 VM, Secure Boot/vTPM and consumer unattend for identity, accounts, activation, network and management. Never boot the canonical disk. Capture is unencrypted: vTPM state is not exported with standalone VHDX, so consumers create fresh TPM state and must not bind build secrets to it. A disposable deployment smoke test is required for production qualification.
 
-## CI, validation and troubleshooting
+## 🔎 CI, validation and troubleshooting
 
 Static tests parse PowerShell/XML, check pipeline/security invariants and links, run init/fmt/full schema validation for twelve release/edition combinations, optional blocks and invalid inputs. Synthetic manifests exercise acceptance/rejection. Static schema acceptance of expired Pro 24H2 does not authorize live use. These checks do not certify a real ISO or image.
 

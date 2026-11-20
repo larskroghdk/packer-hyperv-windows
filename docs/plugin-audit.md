@@ -1,4 +1,4 @@
-# Plugin interface audit
+# 🔌 Plugin interface audit
 
 Reviewed local Config structs, generated HCL2 schemas, main registration, restart logic, guest actions, docs/examples and reports on 2026-11-19. The registered component is `plugin.DEFAULT_NAME` in each custom plugin, so its HCL name is the required-plugin name without a repeated suffix. All use the builder-provided WinRM communicator and require elevated native Windows PowerShell 5.1; no second connection mechanism is introduced.
 
@@ -10,7 +10,7 @@ Reviewed local Config structs, generated HCL2 schemas, main registration, restar
 | windows-update / github.com/rgl/windows-update | upstream tag v0.18.4 | search_criteria, filters, update_limit, update_max_retries, restart_timeout | SYSTEM scheduled-task execution; install/restart/rescan loop. update_limit is batch size; update_max_retries bounds failures, not total successful cycles. Packer timeout bounds the overall stage. No report_path or offline-MSU option. |
 | windows-cleanup / github.com/larskroghdk/windows-cleanup | 862156428506ce6a8d679a28bc18a39882c46c0f / 0.1.0 | profile, component_store, windows_update, provisioning_artifacts, artifact_paths, pending_reboot_policy, validate_system, required_services, required_features, operation_timeout, report_path, sysprep | No automatic restarts. Pending servicing is an error. Supported DISM cleanup, no ResetBase, log clearing or datastore deletion. required_features uses DISM identity NetFx3. sysprep=true explicitly rejects non-QEMU builders, so this project sets false. |
 
-## Desktop compatibility audit (2026-11-20)
+## 🖥️ Desktop compatibility audit (2026-11-20)
 
 Read Config, generated HCL2Spec, main registration, guest actions, restart logic, applicability/lifecycle, examples and tests in all four local sources at the commits above. No sibling source was modified. Client features use DISM identities MicrosoftWindowsPowerShellV2Root and NetFx3. Optimization supports Client builds from 14393; catalog applicability still controls each setting. Cleanup supports Client x64, safe staging roots and service/feature/pending-reboot checks. sysprep=true rejects Hyper-V, so it remains false.
 

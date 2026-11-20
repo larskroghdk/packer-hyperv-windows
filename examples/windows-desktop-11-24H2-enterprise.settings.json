@@ -1,0 +1,13 @@
+{
+  "iso_path": "C:/ISO/Windows-11-24H2-x64-en-US.iso",
+  "iso_checksum": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "image_name": "Windows 11 Enterprise",
+  "edition": "Enterprise",
+  "switch_name": "IsolatedImageBuild",
+  "winrm_allowed_address": "192.0.2.10/32",
+  "image_version": "2026.11.1",
+  "enable_netfx3": false,
+  "remove_consumer_apps": false,
+  "software_packages": [],
+  "approved_oob_packages": []
+}

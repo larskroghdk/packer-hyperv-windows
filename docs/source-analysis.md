@@ -1,0 +1,15 @@
+# Source analysis and reuse
+
+Before implementation, inspected the source project's root HCL, release/settings files, examples, unattended XML, bootstrap, guest prepare/validate/finalize, SYSTEM MSU bridge, host/media/build scripts, manifest and detached-image verification, static/live tests, both workflows, documentation and all ten focused `.agents` skills. Source: `C:/Git/larskroghdk/packer-hyperv-windows-server`. Source commit: `81cf8e34da209fd0942c6cd53cebfdeda3746005`; Git status remained clean. No original source was edited.
+
+The original separates typed inputs, pinned plugins, one Hyper-V ISO source and an ordered build. Server release/Standard/Datacenter/Core/Desktop choices share the pipeline. Preflight checks approved ISO SHA256, exact image name, build, edition, type, architecture, English UI and UEFI payload. Bootstrap stages matching SxS and establishes native PowerShell 5.1 over scoped self-signed HTTPS WinRM.
+
+Custom plugins own optional features, optimization, hardening and supported servicing cleanup. Online WUA uses rgl/windows-update because the custom update repository is absent. Approved MSUs use SYSTEM WUSA with per-package Packer restart boundaries. Plugin-owned restarts, stage timeouts, read-back reports and post-update dry runs gate progress. Cleanup uses supported DISM operations and explicit staging artifacts, retaining servicing databases and diagnostics.
+
+The builder shutdown command schedules a delayed SYSTEM finalizer. It removes access, invalidates credentials, deletes known artifacts and invokes Sysprep generalize/oobe/shutdown. Host verification mounts the detached VHDX read-only and checks generalized OOBE state using a copied registry hive. It never boots the canonical disk. Release manifests require guest/plugin/offline evidence and record disk SHA256. External mounted storage copies are verified without overwrite.
+
+Hosted validation compiles four source-pinned sibling plugins and publishes evidence. Protected manual self-hosted CI requires trusted main and explicit live-build authorization. Codex, Claude and Copilot share agent instructions and focused procedures.
+
+Desktop adaptation retains this architecture, replacing Server Manager/Core/Datacenter assumptions with Client x64 identities and client DISM feature names. Added release/edition lifecycle validation, Windows 11 virtual TPM, 64-GiB minimum disk, optional NetFx3, desktop OOBE temporary account, public volume setup keys, desktop policies, signed/hash-checked software bridge, narrow opt-in consumer AppX removal and final Defender/firewall/AppX checks.
+
+Windows 10 has no implemented plugin hardening baseline, so its separately reported local policy is limited. Windows 11 baselines exist through 26H2. The absent software plugin is replaced with an opt-in MSI/VC++ bridge; unsupported plugin options were not invented. No sibling plugin was modified. Default-user behavior uses machine policies, retaining Store frameworks, Edge/WebView2, Defender, firewall and servicing dependencies. No security hardware or activation bypass is introduced.

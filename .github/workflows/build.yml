@@ -43,13 +43,13 @@ jobs:
       PKR_VAR_administrator_password: ${{ secrets.PACKER_ADMINISTRATOR_PASSWORD }}
       PACKER_PLUGIN_PATH: ${{ vars.PACKER_PLUGIN_PATH }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: hashicorp/setup-packer@v3
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: hashicorp/setup-packer@ce93c3c08a6c2ff2275bf4b54ff0d9a75f6c9789 # v3.4.0
         with:
           version: '1.16.2'
       - name: Build and verify the generalized image
         run: ./tests/live/Test-Build.ps1 -Version $env:FACTORY_VERSION -SettingsPath $env:FACTORY_SETTINGS -AuthorizeLiveBuild -ExternalStorage $env:FACTORY_STORAGE
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
           name: windows-desktop-${{ inputs.windows_release }}-${{ github.run_id }}-reports
@@ -58,7 +58,7 @@ jobs:
             .validation/plugin-provenance.json
           retention-days: 30
           if-no-files-found: warn
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: ${{ success() && inputs.upload_vhdx }}
         with:
           name: windows-desktop-${{ inputs.windows_release }}-${{ github.run_id }}-vhdx

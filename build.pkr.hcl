@@ -1,5 +1,5 @@
 build {
-  name    = "windows-desktop"
+  name = "windows-desktop"
   sources = [
     "source.hyperv-iso.windows"
   ]

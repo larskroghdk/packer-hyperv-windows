@@ -7,8 +7,13 @@
 
 .NOTES
     Author: Lars Krogh project contributors
-    Version: 1.0.0
+    Version: 1.0.1
 #>
+
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidOverwritingBuiltInCmdlets', '', Justification = 'Isolated mocks shadow built-in cmdlets so Install-Software.ps1 runs without touching the system.')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSReviewUnusedParameter', '', Justification = 'Isolated mocks shadow built-in cmdlets and declare the parameters the script under test binds.')]
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '', Justification = 'Isolated mocks shadow built-in cmdlets and change no system state.')]
+param()
 
 $ErrorActionPreference = 'Stop'
 

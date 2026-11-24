@@ -23,13 +23,25 @@ Live builds additionally need a dedicated elevated Hyper-V host that meets the [
 `versions.pkr.hcl` pins every plugin. The custom `windows-features`, `windows-optimize`, `windows-harden` and `windows-cleanup` plugins have no downloadable releases, so `scripts/Install-LocalPlugins.ps1` compiles them from source, installs them into `.validation/plugins` and records commit, dirty state and binary SHA256 in `.validation/plugin-provenance.json`. `hashicorp/hyperv` and `rgl/windows-update` install from their published releases.
 
 ```powershell
-./scripts/Install-LocalPlugins.ps1    # -RepositoryRoot <dir> if the plugin sources are elsewhere
+./scripts/Install-LocalPlugins.ps1    # plugin sources checked out beside this repository
+$env:PACKER_PLUGIN_PATH = "$pwd/.validation/plugins"
+```
+
+The installer builds whatever each checkout contains, so check out every plugin at the commit pinned in `.github/workflows/validate.yml` and the [plugin audit](../docs/plugin-audit.md), as CI does. A checkout that has moved past its pin builds a different version, and `packer init` rejects it. To leave your working clones untouched, clone the pins into a separate directory and pass it with `-RepositoryRoot`:
+
+```powershell
+$root = 'C:/Temp/factory-plugins'
+foreach ($pin in @{ features = '891876d5b29fc5b7efc969747a1e55d1019369a2'; optimize = '0f5670039db6ff64b9f157ffd4ec9fb7ed2344c3'; harden = '8dc70d2c81be4515ad243dfbe288d61151ab722d'; cleanup = '862156428506ce6a8d679a28bc18a39882c46c0f' }.GetEnumerator()) {
+    git clone --quiet https://github.com/larskroghdk/packer-plugin-windows-$($pin.Key).git "$root/packer-plugin-windows-$($pin.Key)"
+    git -C "$root/packer-plugin-windows-$($pin.Key)" checkout --quiet $pin.Value
+}
+./scripts/Install-LocalPlugins.ps1 -RepositoryRoot $root
 $env:PACKER_PLUGIN_PATH = "$pwd/.validation/plugins"
 ```
 
 Before using a plugin option, inspect its `Config` struct, generated HCL2 spec, registration, guest actions and tests at the pinned commit. Do not infer support from a plugin's name or documentation alone, and do not change sibling plugin repositories from here. A change that moves a plugin pin updates, in the same pull request:
 
-- `versions.pkr.hcl`, and the commit in `.github/workflows/validate.yml`;
+- `versions.pkr.hcl`, the commit in `.github/workflows/validate.yml` and the pinned commits in this guide;
 - the commit and the audited interface in the [plugin audit](../docs/plugin-audit.md);
 - the configuration that uses any new or changed option, and its static tests.
 
@@ -107,7 +119,7 @@ Never use `packer -force`, change existing VMs, switches or media, or overwrite 
 ### YAML (workflows and issue forms)
 
 - Use two-space indentation and LF line endings. Run `actionlint` on workflow changes.
-- Grant minimum `permissions`. Pass dispatch inputs through `env:`, never by interpolating them into `run:` scripts. Pin actions and tools to explicit versions, and pin sibling plugin checkouts to commit SHAs.
+- Grant minimum `permissions`. Pass dispatch inputs through `env:`, never by interpolating them into `run:` scripts. Pin actions to full commit SHAs with a version comment, pin tools to explicit versions, and pin sibling plugin checkouts to commit SHAs.
 - Never route pull request jobs to the self-hosted runner.
 
 ### XML (answer files)

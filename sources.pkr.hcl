@@ -4,8 +4,8 @@ locals {
     Enterprise   = "NPPR9-FWDCX-D2C8J-H872K-2YT43"
     Education    = "NW6C2-QMPVW-D7KKK-3GKT6-VCFB2"
   }
-  image_id = "win${var.windows_release}-${lower(var.edition)}-${var.image_version}-${var.build_id}"
-  reports  = "${var.report_directory}/${local.image_id}"
+  image_id       = "win${var.windows_release}-${lower(var.edition)}-${var.image_version}-${var.build_id}"
+  reports        = "${var.report_directory}/${local.image_id}"
   password_xml   = replace(replace(replace(replace(replace(var.administrator_password, "&", "&amp;"), "<", "&lt;"), ">", "&gt;"), "\"", "&quot;"), "'", "&apos;")
   image_name_xml = replace(replace(replace(var.image_name, "&", "&amp;"), "<", "&lt;"), ">", "&gt;")
 }
@@ -40,11 +40,11 @@ source "hyperv-iso" "windows" {
     "Bootstrap.ps1"  = file("${path.root}/scripts/bootstrap/Bootstrap.ps1")
     "bootstrap.json" = jsonencode({ port = var.winrm_port, allowed_address = var.winrm_allowed_address, netfx_source = var.netfx_source, enable_netfx3 = var.enable_netfx3 })
   }
-  communicator   = "winrm"
-  winrm_username = var.administrator_username
-  winrm_password = var.administrator_password
-  winrm_use_ssl  = true
-  winrm_use_ntlm = true
+  communicator     = "winrm"
+  winrm_username   = var.administrator_username
+  winrm_password   = var.administrator_password
+  winrm_use_ssl    = true
+  winrm_use_ntlm   = true
   winrm_insecure   = true
   winrm_port       = var.winrm_port
   winrm_timeout    = var.winrm_timeout

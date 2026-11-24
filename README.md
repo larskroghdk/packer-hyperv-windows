@@ -41,7 +41,12 @@ The pipeline validates installed identity, handles optional features and approve
 - [Source analysis and desktop differences](docs/source-analysis.md)
 - [Actual validation and limitations](docs/implementation-report.md)
 - [Agent instructions](AGENTS.md)
+- [Contributing](.github/CONTRIBUTING.md), [security policy](.github/SECURITY.md) and [code of conduct](.github/CODE_OF_CONDUCT.md)
 
 ## 🔐 Media, licensing and qualification
 
 No ISO, installer, activation entitlement or ESU enrollment is bundled. Software is opt-in using approved hashes/signatures. The missing software plugin uses a documented MSI/VC++ bridge; Windows 10 has no compatible plugin security baseline and uses explicitly limited local policy.
+
+## 📄 License
+
+This repository's source code, configuration and documentation are licensed under the [Mozilla Public License 2.0](LICENSE), matching the `packer-plugin-windows-*` plugins it builds with. The license covers this repository only. Windows, installation media, Microsoft and third-party packages, Packer and the plugins it uses remain under their own terms; operators are responsible for obtaining and complying with them.

@@ -1,0 +1,143 @@
+name: Bug report
+description: A validation, build, provisioning or release-verification stage failed or produced a wrong result.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Do not submit secrets.** Never include passwords, `PKR_VAR_administrator_password`, tokens, product keys, answer media, ISO or VHDX files.
+        Remove internal host names, IP addresses, share paths and user names that must not be public. Report vulnerabilities through the [security policy](https://github.com/larskroghdk/packer-hyperv-windows/security/policy), not here.
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Affected stage
+      options:
+        - Static tests (Test-Project.ps1)
+        - Plugin installation (Install-LocalPlugins.ps1, packer init)
+        - Host preflight or media checks (Test-Host.ps1)
+        - Windows Setup or answer file
+        - WinRM bootstrap or connection
+        - Features, software or optimization
+        - Hardening or desktop policy
+        - Windows Update, offline packages or restarts
+        - Validation or cleanup
+        - Finalization or Sysprep
+        - Offline verification or manifest (Test-Image.ps1, New-Manifest.ps1)
+        - GitHub Actions workflow
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Factory commit or release
+      description: Output of `git rev-parse HEAD`, or the release tag.
+    validations:
+      required: true
+  - type: input
+    id: packer-version
+    attributes:
+      label: Packer version
+      description: Output of `packer version`.
+      placeholder: Packer v1.16.2
+    validations:
+      required: true
+  - type: textarea
+    id: plugins
+    attributes:
+      label: Packer plugin versions
+      description: Output of `packer plugins installed`, and the commit and dirty fields from `.validation/plugin-provenance.json`.
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: host
+    attributes:
+      label: Host Windows version and build
+      description: Output of `[Environment]::OSVersion.Version` and the host edition.
+      placeholder: Windows 11 Enterprise 25H2, 10.0.26200.xxxx
+    validations:
+      required: true
+  - type: dropdown
+    id: release
+    attributes:
+      label: Target Windows release
+      options:
+        - Windows 10 22H2
+        - Windows 11 24H2
+        - Windows 11 25H2
+        - Windows 11 26H2
+        - Not applicable
+    validations:
+      required: true
+  - type: dropdown
+    id: edition
+    attributes:
+      label: Target edition
+      options:
+        - Professional
+        - Enterprise
+        - Education
+        - Not applicable
+    validations:
+      required: true
+  - type: input
+    id: target-build
+    attributes:
+      label: Target build and installation media
+      description: The installed build if Setup completed, and the media build and image name from `Get-WindowsImage`. Do not attach the ISO or post its download link.
+      placeholder: 26300.xxxx; media 26300.xxxx, "Windows 11 Enterprise"
+  - type: textarea
+    id: hyperv
+    attributes:
+      label: Hyper-V configuration
+      description: VM generation, Secure Boot template, vTPM, switch type, CPU and memory, and whether the host is nested. Remove switch and host names.
+      placeholder: Gen 2, MicrosoftWindows Secure Boot, vTPM enabled, internal switch with DHCP, 4 vCPU, 8192 MB, not nested
+    validations:
+      required: true
+  - type: textarea
+    id: config
+    attributes:
+      label: Build configuration
+      description: The settings JSON with paths, hashes, addresses and secrets replaced by placeholders, and the command you ran.
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. ./scripts/Build.ps1 -Version 11-26H2 -SettingsPath <path> -Build
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead, including the exact error message.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized logs
+      description: Relevant excerpts from `reports/<id>/packer.log`, plugin JSON reports, Panther, CBS, DISM or Sysprep logs. Remove secrets and internal details.
+      render: text
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I removed passwords, tokens, product keys and sensitive infrastructure details from everything above.
+          required: true
+        - label: I used approved media whose SHA256 I verified, and did not use `packer -force`.
+          required: false

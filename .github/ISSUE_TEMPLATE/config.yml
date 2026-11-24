@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/larskroghdk/packer-hyperv-windows/security/advisories/new
+    about: Report suspected vulnerabilities privately instead of opening a public issue.
+  - name: Operations and troubleshooting
+    url: https://github.com/larskroghdk/packer-hyperv-windows/blob/main/docs/operations.md#-ci-validation-and-troubleshooting
+    about: Prerequisites, media, configuration and failure diagnosis. Check here before opening an issue.
+  - name: Plugin interfaces and compatibility
+    url: https://github.com/larskroghdk/packer-hyperv-windows/blob/main/docs/plugin-audit.md
+    about: Audited plugin options, limitations and known compatibility gaps.

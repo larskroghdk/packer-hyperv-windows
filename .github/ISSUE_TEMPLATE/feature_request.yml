@@ -1,0 +1,48 @@
+name: Feature request
+description: Propose a new Windows release, edition, provisioning capability, option or workflow change.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Read the [plugin audit](https://github.com/larskroghdk/packer-hyperv-windows/blob/main/docs/plugin-audit.md) and [contributing guide](https://github.com/larskroghdk/packer-hyperv-windows/blob/main/.github/CONTRIBUTING.md) first. Operations that a plugin implements belong in the plugin, not in factory scripts.
+        Do not include credentials, product keys or sensitive infrastructure details.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - New Windows release or edition
+        - Provisioning stage or plugin integration
+        - Configuration option
+        - Host orchestration or release verification
+        - GitHub Actions workflow
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What you need to do, and why the factory does not support it today.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: |
+        How it could work. For a new release, give the build number, edition lifecycle and Microsoft references.
+        For plugin integration, name the plugin, its version or commit and the option, and link its Config or HCL2 spec.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Compatibility and security impact
+      description: Effects on existing releases or editions, WinRM, hardening deferrals, Sysprep, credentials or the self-hosted runner.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
